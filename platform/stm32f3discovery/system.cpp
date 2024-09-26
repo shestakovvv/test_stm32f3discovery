@@ -47,7 +47,7 @@ namespace System {
   #endif /* USER_VECT_TAB_ADDRESS */
   }
 
-  extern "C" void SystemCoreClockUpdate(void)
+void core_clock_update(void)
   {
     // 1. Enable the HSE (High-Speed External) clock
       RCC->CR |= RCC_CR_HSEON;  // Turn on HSE
@@ -113,6 +113,7 @@ namespace System {
   }
 
   void init(void) {
+    core_clock_update();
     init_tick();
   }
 }

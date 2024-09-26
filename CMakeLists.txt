@@ -4,7 +4,7 @@ project(test_stm32f3discovery)
 enable_language(CXX C ASM)
 
 set(CMAKE_C_FLAGS "-std=gnu17")
-set(CMAKE_C_FLAGS_DEBUG "-O0 -g3 -gdwarf-2")
+set(CMAKE_C_FLAGS_DEBUG "-O3 -g3 -gdwarf-2")
 set(CMAKE_C_FLAGS_RELEASE "-O3 -g0")
 
 set(CMAKE_CXX_FLAGS "-std=c++17")
