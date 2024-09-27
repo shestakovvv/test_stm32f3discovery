@@ -36,6 +36,8 @@ message("| mcu flags:\t${MCU_FLAGS}")
 file(GLOB_RECURSE SOURCES 
     ${PROJECT_SOURCE_DIR}/platform/${PLATFORM}/*(.s|.c|.cpp|.h)    
     ${PROJECT_SOURCE_DIR}/src/*(.s|.c|.cpp|.h)    
+    ${PROJECT_SOURCE_DIR}/src/freertos/*(.s|.c|.cpp|.h)    
+    ${PROJECT_SOURCE_DIR}/src/system/*(.s|.c|.cpp|.h)    
 )
 
 add_executable(${TARGET_EXECUTABLE}
@@ -46,12 +48,20 @@ add_executable(${TARGET_EXECUTABLE}
 target_include_directories(${TARGET_EXECUTABLE} PRIVATE
     ${PROJECT_SOURCE_DIR}/platform/${PLATFORM}
     ${PROJECT_SOURCE_DIR}/src
+    ${PROJECT_SOURCE_DIR}/src/freertos
+    ${PROJECT_SOURCE_DIR}/src/system
 )
 
 # MARK: libs
 target_link_libraries(${TARGET_EXECUTABLE} PRIVATE
     stm32f3xx_cmsis
 )
+
+
+include(${PROJECT_SOURCE_DIR}/cmake/freertos.cmake)
+target_include_directories(${TARGET_EXECUTABLE} PUBLIC ${FREERTOS_INCLUDES})
+target_sources(${TARGET_EXECUTABLE} PUBLIC ${FREERTOS_SOURCES})
+set_source_files_properties(${FREERTOS_SOURCES} PROPERTIES COMPILE_OPTIONS "-w")
 
 # MARK: compile definitions
 target_compile_definitions(${TARGET_EXECUTABLE} PUBLIC
